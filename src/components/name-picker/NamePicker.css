@@ -1,0 +1,55 @@
+.name-picker {
+  display: fixed;
+  height: 100vh;
+}
+
+.name-picker .container {
+  display: flex;
+  height: 100vh;
+}
+
+.name-picker .form {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-size: 3rem;
+}
+
+.name-picker .name {
+  text-align: center;
+  font-size: 2rem;
+  border: none;
+  outline: none;
+  width: 15rem;
+}
+
+.name-picker .submit {
+  font-size: 3rem;
+  border: none;
+  border-radius: 5px;
+  color: var(--red-accent);
+  background: none;
+  cursor: pointer;
+  background-size: 0;
+  position: relative;
+
+  transition: all 250ms ease-in-out;
+}
+
+.name-picker .submit::after {
+  content: "sus";
+  position: absolute;
+  transform: scale(2) rotate(-25deg);
+  bottom: 2rem;
+  left: -0.5rem;
+  opacity: 0;
+
+  transition: all 250ms ease-in-out;
+}
+
+.name-picker .submit:hover::after {
+  transform: scale(1) rotate(-25deg);
+  text-decoration: underline;
+  opacity: 1;
+}

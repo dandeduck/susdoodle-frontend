@@ -1,0 +1,15 @@
+.logo {
+  position: fixed;
+  width: 100%;
+  font-size: 8rem;
+  margin-block: 3rem;
+}
+
+.logo .container {
+  margin-inline: auto;
+  width: fit-content;
+}
+
+.accented {
+  color: var(--red-accent);
+}

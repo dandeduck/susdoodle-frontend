@@ -1,12 +1,17 @@
-import React, { useEffect } from 'react';
-import logo from './logo.svg';
+import { createContext, useEffect, useState } from 'react';
 import { io, Socket } from "socket.io-client";
 import './App.css';
 import { v4 as uuid } from 'uuid';
 import { createRoom, joinRoom } from './components/api/api';
 import { Player } from './components/api/player';
+import NamePicker from './components/name-picker/NamePicker';
+import Logo from './components/logo/Logo';
+
+export const playerContext = createContext({});
 
 function App() {
+  const [player, setPlayer] = useState<Player>();
+
   useEffect(() => {
     const socket = io("ws://localhost:4001", {transports: ['websocket']});
     const player = {name: "Daniel", id: uuid()};
@@ -25,21 +30,11 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Logo/>
+      <playerContext.Provider value={[player, setPlayer]}>
+        <NamePicker setPlayer={setPlayer}/>
+      </playerContext.Provider>
     </div>
   );
 }
