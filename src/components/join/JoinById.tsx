@@ -4,7 +4,7 @@ import './JoinById.css';
 
 export default function JoinById() {
   const [roomNumber, setRoomNumber] = useState(0);
-  
+
   const onClick = (e: any) => {
 
   }
@@ -17,7 +17,7 @@ export default function JoinById() {
         if (val.length < 7)
           setRoomNumber(parseInt(val));
       }} value={roomNumber > 0 ? roomNumber : ""}></input>
-      <button onClick={onClick}>Join</button>
+      <button onClick={onClick} className="hand-written">Join</button>
     </div>
   )
 }
