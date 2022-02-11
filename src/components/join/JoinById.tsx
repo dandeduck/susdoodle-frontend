@@ -9,8 +9,7 @@ export default function JoinById() {
     gsap.to('.join-room',
     {
       opacity: 1,
-      visibility: "visible",
-      delay: 0.3
+      delay: 0
     })
   }, []);
 

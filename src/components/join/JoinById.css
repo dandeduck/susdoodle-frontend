@@ -1,17 +1,14 @@
 .join-room {
   width: 0;
   display: flex;
+  gap: 2rem;
+  flex-direction: column;
   height: 100%;
   align-items: center;
   justify-content: center;
 
   opacity: 0;
-  visibility: hidden;
   height: 0;
-}
-
-.join-room label {
-  font-size: 3rem;
 }
 
 .join-room input {
