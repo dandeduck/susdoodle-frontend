@@ -1,6 +1,7 @@
 .name-picker {
   display: fixed;
   height: 100vh;
+  background-color: white;
 }
 
 .name-picker .container {

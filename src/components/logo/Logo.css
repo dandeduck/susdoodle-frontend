@@ -3,6 +3,7 @@
   width: 100%;
   font-size: 8rem;
   margin-block: 3rem;
+  z-index: 100;
 }
 
 .logo .container {
