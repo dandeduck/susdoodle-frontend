@@ -4,15 +4,7 @@ import './JoinById.css';
 
 export default function JoinById() {
   const [roomNumber, setRoomNumber] = useState(0);
-
-  useEffect(() => {
-    gsap.to('.join-room',
-    {
-      opacity: 1,
-      delay: 0
-    })
-  }, []);
-
+  
   const onClick = (e: any) => {
 
   }

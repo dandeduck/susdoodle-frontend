@@ -1,0 +1,42 @@
+.room-creation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.room-creation span {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.room-creation .text {
+  margin-top: 1.5rem;
+}
+
+.room-creation textarea {
+  width: 20rem;
+  font-size: 1.2rem;
+}
+
+.room-creation .slider {
+  appearance: none;
+}
+
+.MuiSlider-markLabel {
+  font-size: 1rem;
+}
+
+.slider span {
+  font-size: 1.7rem;
+  font-family: 'Patrick Hand', cursive;
+}
+
+.room-creation .public {
+  display: flex;
+  align-items: center;
+}
+
+.room-creation button {
+  font-size: 2rem;
+  margin-top: 1rem;
+}

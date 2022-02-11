@@ -41,3 +41,7 @@
   text-decoration-skip-ink: none;
   text-decoration-thickness: 3px;
 }
+
+.join .selected {
+  width: 0;
+}
