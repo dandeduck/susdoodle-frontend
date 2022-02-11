@@ -1,0 +1,20 @@
+.join-room {
+  width: 0;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+}
+
+.join-room label {
+  font-size: 3rem;
+}
+
+.join-room input {
+  font-size: 3rem;
+  width: 7ch;
+}

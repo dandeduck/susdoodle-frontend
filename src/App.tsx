@@ -1,11 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { io, Socket } from "socket.io-client";
 import './App.css';
-import { v4 as uuid } from 'uuid';
-import { createRoom, joinRoom } from './components/api/api';
 import { Player } from './components/api/player';
 import NamePicker from './components/name-picker/NamePicker';
 import Logo from './components/logo/Logo';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Join from './components/join/Join';
 
 export const playerContext = createContext<Player>({id: "", name: ""});
 
@@ -46,9 +45,17 @@ function App() {
   return (
     <div className="app">
       <Logo/>
-      <playerContext.Provider value={player}>
-        {player.id == "" ? <NamePicker setPlayer={setPlayer}/> : <span></span>}
-      </playerContext.Provider>
+      <div className='app-container'>
+        {player.id == "" ? <NamePicker setPlayer={setPlayer}/> : 
+          <playerContext.Provider value={player}>
+            <BrowserRouter>
+              <Routes>
+                <Route path='/*' element={<Join/>}/>
+              </Routes>
+            </BrowserRouter>
+          </playerContext.Provider>
+        }
+      </div>
     </div>
   );
 }

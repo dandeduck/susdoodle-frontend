@@ -1,21 +1,16 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Player } from '../api/player';
 import { v4 as uuid} from 'uuid';
 import gsap from 'gsap';
 import './NamePicker.css';
-import { playerContext } from '../../App';
 
 export default function NamePicker(props: {setPlayer: (player: Player) => void}) {
   const [playerName, setPlayerName] = useState("");
   
   const onClick = () => {
     if (playerName.length > 2) {
-      gsap.to('.name-picker .container', {
-        y: -200,
-        opacity: 0,
-        duration: 0.3
-      })
       gsap.to('.name-picker', {
+        y: -200,
         opacity: 0,
         duration: 0.3
       })
@@ -23,7 +18,7 @@ export default function NamePicker(props: {setPlayer: (player: Player) => void})
       setTimeout(() => props.setPlayer({
         name: playerName,
         id: uuid()
-      }), 600);
+      }), 300);
     }
     else {
       const timeline = gsap.timeline();
@@ -47,15 +42,13 @@ export default function NamePicker(props: {setPlayer: (player: Player) => void})
   }
 
   return (
-    <div className='name-picker'>
-      <div className='container'>
-        <div className='form'>
-          <div className='input'>
-            <input className='name hand-written' placeholder='Name' onChange={e => {setPlayerName(e.target.value)}}></input>
-            <span className='wrong hand-written'>* Must be at least 3 characters</span>
-          </div>
-          <button className='submit hand-written' onClick={onClick}>continue</button>
+    <div className='name-picker page'>
+      <div className='form'>
+        <div className='input'>
+          <input className='name hand-written' placeholder='Name' onChange={e => {setPlayerName(e.target.value)}}></input>
+          <span className='wrong hand-written'>* Must be at least 3 characters</span>
         </div>
+        <button className='submit hand-written' onClick={onClick}>continue</button>
       </div>
     </div>
   )
