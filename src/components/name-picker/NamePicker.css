@@ -17,6 +17,19 @@
   font-size: 3rem;
 }
 
+.name-picker .input {
+  position: relative;
+}
+
+.name-picker .wrong {
+  position: absolute;
+  font-size: 1.2rem;
+  color: rgb(248, 88, 88);
+  top: -1rem;
+  right: -7rem;
+  opacity: 0;
+}
+
 .name-picker .name {
   text-align: center;
   font-size: 2rem;

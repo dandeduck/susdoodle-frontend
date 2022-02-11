@@ -9,27 +9,51 @@ export default function NamePicker(props: {setPlayer: (player: Player) => void})
   const [playerName, setPlayerName] = useState("");
   
   const onClick = () => {
-    gsap.to('.name-picker .container', {
-      y: -200,
-      opacity: 0,
-      duration: 0.3
-    })
-    gsap.to('.name-picker', {
-      opacity: 0,
-      duration: 0.3
-    })
+    if (playerName.length > 2) {
+      gsap.to('.name-picker .container', {
+        y: -200,
+        opacity: 0,
+        duration: 0.3
+      })
+      gsap.to('.name-picker', {
+        opacity: 0,
+        duration: 0.3
+      })
+  
+      setTimeout(() => props.setPlayer({
+        name: playerName,
+        id: uuid()
+      }), 600);
+    }
+    else {
+      const timeline = gsap.timeline();
 
-    setTimeout(() => props.setPlayer({
-      name: playerName,
-      id: uuid()
-    }), 600);
+      timeline.to('.name-picker .name', {
+        x: -20,
+        duration: 0.1
+      })
+      .to('.name-picker .name', {
+        x: 10,
+        duration: 0.1
+      })
+      .to('.name-picker .name', {
+        x: 0,
+        duration: 0.1
+      });
+      gsap.to('.name-picker .wrong', {
+        opacity: 1
+      });
+    }
   }
 
   return (
     <div className='name-picker'>
       <div className='container'>
         <div className='form'>
-          <input className='name hand-written' placeholder='Name' onChange={e => {setPlayerName(e.target.value)}}></input>
+          <div className='input'>
+            <input className='name hand-written' placeholder='Name' onChange={e => {setPlayerName(e.target.value)}}></input>
+            <span className='wrong hand-written'>* Must be at least 3 characters</span>
+          </div>
           <button className='submit hand-written' onClick={onClick}>continue</button>
         </div>
       </div>
