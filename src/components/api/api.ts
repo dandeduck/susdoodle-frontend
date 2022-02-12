@@ -2,7 +2,11 @@ import config from "../../config";
 import { Player } from "./player";
 import { RoomConfig } from "./roomConfig";
 
-export function joinRoom(player: Player, roomNumber?: number, roomId?: string) {
+export function leaveRoom(player: Player, roomId?: string, roomNumber?: number) {
+  return sendRequest('POST', 'rooms/leave', {player: player, id: roomId, number: roomNumber});
+}
+
+export function joinRoom(player: Player, roomId?: string, roomNumber?: number) {
   return sendRequest('POST', 'rooms/join', {player: player, id: roomId, number: roomNumber});
 }
 
@@ -11,6 +15,8 @@ export function createRoom(creator: Player, config: RoomConfig) {
 }
 
 function sendRequest(method: 'GET' | 'POST' | 'DELETE', endpoint: string, request: object) {
+  console.log(endpoint);
+  console.log(request);
   const requestOptions = {
     method: method,
     headers: { 'Content-Type': 'application/json', 'X-API-KEY': config.apiKey },

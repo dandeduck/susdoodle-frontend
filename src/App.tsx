@@ -5,28 +5,16 @@ import NamePicker from './components/name-picker/NamePicker';
 import Logo from './components/logo/Logo';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Join from './components/join/Join';
+import Waiting from './components/waiting/Waiting';
+import { io, Socket } from 'socket.io-client';
+import config from './config';
 
 export const playerContext = createContext<Player>({id: "", name: ""});
+export const socketContext = createContext<Socket>(io(config.apiSocket, {transports: ['websocket']}));
 
 function App() {
   const [player, setPlayer] = useState<Player>({id: "", name: ""});
 
-  // useEffect(() => {
-  //   const socket = io("ws://localhost:4001", {transports: ['websocket']});
-  //   const player = {name: "Daniel", id: uuid()};
-
-  //   socket.on("connect", () => {
-  //     initGame(player, socket);
-  //   });
-  // }, []);
-  
-  // const initGame = async (player: Player, socket: Socket) => {
-  //   const roomNumber = (await createRoom(player, {isOpen: true, size: 5, doodleTime: 30, length: 2, categories: ["person", "activity"]})).roomNumber;
-  //   await joinRoom(player, roomNumber);
-  //   socket.emit("join", {player: player, room: roomNumber}, (response: any) => {
-  //     console.log(response);
-  //   });
-  // }
   useEffect(() => {
     if (player.id === "") {
       const stored = sessionStorage.getItem('player');
@@ -50,6 +38,7 @@ function App() {
           <playerContext.Provider value={player}>
             <BrowserRouter>
               <Routes>
+                <Route path='/rooms/:roomId' element={<Waiting/>}/>
                 <Route path='/*' element={<Join/>}/>
               </Routes>
             </BrowserRouter>

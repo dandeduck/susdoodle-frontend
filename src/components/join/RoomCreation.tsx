@@ -2,6 +2,7 @@ import { ThemeProvider } from '@emotion/react';
 import { Checkbox, createTheme, FormControlLabel, FormGroup, Slider, Switch } from '@mui/material'
 import { red } from '@mui/material/colors';
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { io, Socket } from 'socket.io-client';
 import { playerContext } from '../../App';
 import config from '../../config';
@@ -82,19 +83,11 @@ export default function RoomCreation() {
   const player = useContext(playerContext);
   const [socket, setSocket] = useState<Socket>();
   const [roomConf, setRoomConf] = useState({isOpen: false, size: 3, doodleTime: 30, length: 3, categories: ["person", "activity", "animal", "food", "thing", "movie"]})
-
-  useEffect(() => {
-    setSocket(io(config.apiSocket, {transports: ['websocket']}));
-  }, []);
+  const navigate = useNavigate();
 
   const onClick = async () => {
     const roomId = (await createRoom(player, roomConf)).id as string;
-    await joinRoom(player, undefined, roomId);
-    console.log(roomConf)
-    console.log(roomId);
-    socket?.emit("join", {player: player, room: roomId}, (response: any) => {
-      console.log(response);
-    });
+    navigate('/rooms/'+roomId);
   }
 
   const onCheckboxChanged = (data: boolean, category: string) => {
