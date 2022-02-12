@@ -1,6 +1,11 @@
 import { ThemeProvider } from '@emotion/react';
-import { createTheme, Slider, Switch } from '@mui/material'
+import { Checkbox, createTheme, FormControlLabel, FormGroup, Slider, Switch } from '@mui/material'
 import { red } from '@mui/material/colors';
+import { useContext, useEffect, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
+import { playerContext } from '../../App';
+import config from '../../config';
+import { createRoom, joinRoom } from '../api/api';
 import './RoomCreation.css'
 
 export default function RoomCreation() {
@@ -74,19 +79,62 @@ export default function RoomCreation() {
     }
   });
 
+  const player = useContext(playerContext);
+  const [socket, setSocket] = useState<Socket>();
+  const [roomConf, setRoomConf] = useState({isOpen: false, size: 3, doodleTime: 30, length: 3, categories: ["person", "activity", "animal", "food", "thing", "movie"]})
+
+  useEffect(() => {
+    setSocket(io(config.apiSocket, {transports: ['websocket']}));
+  }, []);
+
+  const onClick = async () => {
+    const roomId = (await createRoom(player, roomConf)).id as string;
+    await joinRoom(player, undefined, roomId);
+    console.log(roomConf)
+    console.log(roomId);
+    socket?.emit("join", {player: player, room: roomId}, (response: any) => {
+      console.log(response);
+    });
+  }
+
+  const onCheckboxChanged = (data: boolean, category: string) => {
+    if (data)
+      roomConf.categories.push(category);
+    else {
+      const index = roomConf.categories.indexOf(category);
+      if (index > -1)
+        roomConf.categories.splice(index, 1);
+    }
+  }
+
   return (
     <div className='room-creation hand-written'>
       <ThemeProvider theme={theme}>
-        <span className='text'>Size</span>
-        <Slider defaultValue={3} className='slider' color='primary' valueLabelDisplay="off" marks={sizeMarks} step={1} min={3} max={10} sx={{width: "15rem", color: "var(--red-accent)"}}/>
-        <span className='text'>Doodling time</span>
-        <Slider defaultValue={30} className='slider' valueLabelDisplay="off" marks={lengthMarks} step={5} min={10} max={60} style={{width: "15rem", color: "var(--red-accent)"}}/>
-        <div className='public text'>
-          <span>Make the room public?</span>
-          <Switch/>
+        <div className='column'>
+          <span className='text'>Size (players)</span>
+          <Slider defaultValue={3} className='slider' color='primary' valueLabelDisplay="off" marks={sizeMarks} step={1} min={3} max={10} sx={{width: "15rem", color: "var(--red-accent)"}} onChange={(e, data) => setRoomConf({...roomConf, size: data as number})}/>
+          <span className='text'>Length (rounds)</span>
+          <Slider defaultValue={5} className='slider' valueLabelDisplay="off" marks={sizeMarks} step={1} min={3} max={10} style={{width: "15rem", color: "var(--red-accent)"}} onChange={(e, data) => setRoomConf({...roomConf, length: data as number})}/>
+          <span className='text'>Doodling time (seconds)</span>
+          <Slider defaultValue={30} className='slider' valueLabelDisplay="off" marks={lengthMarks} step={5} min={10} max={60} style={{width: "15rem", color: "var(--red-accent)"}} onChange={(e, data) => setRoomConf({...roomConf, doodleTime: data as number})}/>
+        </div>
+        <div className='column'>
+          <span className='text'>Doodle categories:</span>
+          <FormGroup className='checkboxes'>
+            <FormControlLabel control={<Checkbox defaultChecked onChange={(e, data) => onCheckboxChanged(data, "activity")}/>} label="Activities" />
+            <FormControlLabel control={<Checkbox defaultChecked onChange={(e, data) => onCheckboxChanged(data, "animal")}/>} label="Animals" />
+            <FormControlLabel control={<Checkbox defaultChecked onChange={(e, data) => onCheckboxChanged(data, "person")}/>} label="People" />
+            <FormControlLabel control={<Checkbox defaultChecked onChange={(e, data) => onCheckboxChanged(data, "food")}/>} label="Food" />
+            <FormControlLabel control={<Checkbox defaultChecked onChange={(e, data) => onCheckboxChanged(data, "movie")}/>} label="Movies" />
+            <FormControlLabel control={<Checkbox defaultChecked onChange={(e, data) => onCheckboxChanged(data, "thing")}/>} label="Things" />
+          </FormGroup>
+          <div className='public text'>
+            <span>Make the room public?</span>
+            <Switch onChange={(e, data) => setRoomConf({...roomConf, isOpen: data})}/>
+          </div>
+            <button onClick={onClick} className="hand-written">Create</button>
         </div>
       </ThemeProvider>
-      <button>Create</button>
     </div>
   )
 }

@@ -8,10 +8,7 @@ import RoomCreation from './RoomCreation';
 export default function Join() {
   const [selected, setSelected] = useState(<span/>);
 
-  const onClick = (e: any, choice: JSX.Element) => {
-    // gsap.to('.buttons', {
-    //   x: -200
-    // });
+  const onClick = (choice: JSX.Element) => {
     gsap.to ('.selected', {
       width: "30rem"
     });
@@ -22,9 +19,9 @@ export default function Join() {
   return (
     <div className='join'>
       <div className='buttons'>
-        <button className='hand-written' onClick={e => onClick(e, <JoinById/>)}>Join room by id</button>
-        <button className='hand-written' onClick={e => onClick(e, <RoomCreation/>)}>Create room</button>
-        <button className='hand-written' onClick={e => onClick(e, <JoinPublic/>)}>Join a public room</button>
+        <button className='hand-written' onClick={() => onClick(<JoinById/>)}>Join room by id</button>
+        <button className='hand-written' onClick={() => onClick(<RoomCreation/>)}>Create room</button>
+        <button className='hand-written' onClick={() => onClick(<JoinPublic/>)}>Join a public room</button>
       </div>
       <div className='selected'>
         {selected}

@@ -1,16 +1,25 @@
 .room-creation {
   display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: 2rem;
+}
+
+.room-creation .column {
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .room-creation span {
+  font-family: 'Patrick Hand', cursive;
   text-align: center;
   font-size: 2rem;
 }
 
 .room-creation .text {
   margin-top: 1.5rem;
+  white-space: nowrap
 }
 
 .room-creation textarea {
@@ -39,4 +48,10 @@
 .room-creation button {
   font-size: 2rem;
   margin-top: 1rem;
+}
+
+.room-creation .checkboxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
 }
