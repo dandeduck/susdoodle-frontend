@@ -80,13 +80,11 @@ export default function RoomCreation() {
     }
   });
 
-  const player = useContext(playerContext);
-  const [socket, setSocket] = useState<Socket>();
   const [roomConf, setRoomConf] = useState({isOpen: false, size: 3, doodleTime: 30, length: 3, categories: ["person", "activity", "animal", "food", "thing", "movie"]})
   const navigate = useNavigate();
 
   const onClick = async () => {
-    const roomId = (await createRoom(player, roomConf)).id as string;
+    const roomId = (await createRoom(roomConf)).id as string;
     navigate('/rooms/'+roomId);
   }
 

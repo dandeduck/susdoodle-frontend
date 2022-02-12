@@ -10,8 +10,8 @@ export function joinRoom(player: Player, roomId?: string, roomNumber?: number) {
   return sendRequest('POST', 'rooms/join', {player: player, id: roomId, number: roomNumber});
 }
 
-export function createRoom(creator: Player, config: RoomConfig) {
-  return sendRequest('POST', 'rooms/new', {creator: creator, config: config});
+export function createRoom(config: RoomConfig) {
+  return sendRequest('POST', 'rooms/new', {config: config});
 }
 
 function sendRequest(method: 'GET' | 'POST' | 'DELETE', endpoint: string, request: object) {
