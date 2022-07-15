@@ -1,0 +1,47 @@
+.join {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.join .buttons {
+  /* margin: auto; */
+  width: fit-content;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 22rem;
+}
+
+.wrap {
+  position: relative;
+  z-index: 10;
+}
+
+.join button {
+  font-size: 3rem;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  cursor: pointer;
+  background-size: 0;
+  z-index: 10;
+  text-decoration-color: var(--red-accent);
+  
+  transition: all 250ms ease-in-out;
+}
+
+.join button:hover {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--red-accent);
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: 3px;
+}
+
+.join .selected {
+  width: 0;
+}
